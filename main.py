@@ -17,9 +17,8 @@ def main():
 
     print(f"Data for testing: {data_path}")
 
-    retcode = pytest.main()
+    retcode = pytest.main(["-x", "app"])
     print(f"::set-output name=exitcode::{retcode}")
-    assert retcode == 0
 
 
 if __name__ == "__main__":
