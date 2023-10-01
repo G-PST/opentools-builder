@@ -16,9 +16,9 @@ def main():
         os.environ["INPUT_DATAPATH"] = data_path
 
     print(f"Data for testing: {data_path}")
-    print(os.listdir())
+    # print(os.listdir())
 
-    retcode = pytest.main()
+    retcode = pytest.main(["-x", "/app"])
     print(f"::set-output name=exitcode::{retcode}")
 
 
