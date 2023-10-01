@@ -12,6 +12,6 @@ RUN pip install --target=/app pydantic pytest
 
 FROM gcr.io/distroless/python3-debian12
 COPY --from=builder /app /app 
-WORKDIR /app 
+# WORKDIR /app 
 ENV PYTHONPATH /app 
 CMD ["/app/main.py"]
