@@ -1,0 +1,13 @@
+name: "GPST Opensource Tool Validator"
+description: "Use this validator to validate the data in GPST opentools repo"
+author: "Kapil Duwadi"
+inputs:
+  datapath:
+    description: "Path to data folder which is to be tested. By default assumes 'data' folder exists at the root of the repo."
+    required: false 
+outputs:
+  exitcode:
+    description: "Returns exit code after running pytest."
+runs:
+  using: docker
+  image: "Dockerfile"
