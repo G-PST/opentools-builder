@@ -17,7 +17,7 @@ def main():
 
     print(f"Data for testing: {data_path}")
 
-    retcode = pytest.main(["-x", "app"])
+    retcode = pytest.main(["-x", "/app"])
     print(f"::set-output name=exitcode::{retcode}")
 
 
