@@ -17,10 +17,12 @@ def download_data_file(issue_url: str, access_token: str):
     headers = {"Authorization": f"token {access_token}"}
     response = requests.get(f"{issue_url}/comments", headers=headers)
 
+    print(f"Response: {response} {response.status_code}")
     if response.status_code != http.HTTPStatus.OK:
         return
 
     comments = response.json()
+    print(f"Comments: {comments}")
     if not comments:
         return
 
