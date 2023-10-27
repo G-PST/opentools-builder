@@ -70,6 +70,8 @@ def main():
         if not file_name:
             print("::set-output name=exitcode::0")
             return
+        
+        print(os.listdir("."))
 
         branch_name = f"issue_{issue_number}_branch"
         subprocess.run(["git", "checkout", "-b", branch_name], check=True)
