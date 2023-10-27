@@ -14,10 +14,10 @@ import requests
 def download_data_file(issue_url: str, access_token: str):
     """Function to download issue file."""
     print("Starting to download the file.")
-    headers = {"Authorization": f"token {access_token}"}
+    headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(f"{issue_url}/comments", headers=headers)
 
-    print(f"Response: {response} {response.status_code}")
+    print(f"Response: {response} {response.status_code} {headers}")
     if response.status_code != http.HTTPStatus.OK:
         return
 
