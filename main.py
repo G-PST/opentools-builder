@@ -13,6 +13,7 @@ import requests
 
 def download_data_file(issue_url: str, access_token: str):
     """Function to download issue file."""
+    print("Starting to download the file.")
     headers = {"Authorization": f"token {access_token}"}
     response = requests.get(f"{issue_url}/comments", headers=headers)
 
@@ -31,6 +32,8 @@ def download_data_file(issue_url: str, access_token: str):
 
     if not json_files:
         return
+    
+    print(f"Detected JSON files {json_files}")
 
     latest_json_file = json_files[-1]
     file_name = latest_json_file.split("/")[-1]
@@ -52,6 +55,8 @@ def main():
     issue_title = os.environ["INPUT_ISSUE_TITLE"]
     issue_url = os.environ["INPUT_ISSUE_URL"]
     token = os.environ["INPUT_TOKEN"]
+
+    print(issue_number, issue_title, issue_url, token)
 
     if issue_number or issue_title or issue_url or token:
         if not (issue_number and issue_title and issue_url and token):
