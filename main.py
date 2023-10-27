@@ -79,6 +79,20 @@ def main():
                 "git",
                 "config",
                 "--global",
+                "user.email",
+                "gpst.opentools@nrel.gov",
+            ],
+            check=True,
+        )
+        subprocess.run(
+            ["git", "config", "--global", "user.name", "GPST Opentools"],
+            check=True,
+        )
+        subprocess.run(
+            [
+                "git",
+                "config",
+                "--global",
                 "--add",
                 "safe.directory",
                 "/github/workspace",
