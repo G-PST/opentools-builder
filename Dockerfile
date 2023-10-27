@@ -18,4 +18,4 @@ RUN apk update && apk add --no-cache git
 # COPY --from=builder /app /app 
 # WORKDIR /app 
 ENV PYTHONPATH /app 
-CMD ["python","main.py"]
+CMD ["python","/app/main.py"]
