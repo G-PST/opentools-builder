@@ -34,7 +34,7 @@ def download_data_file(issue_url: str, access_token: str):
 
     if not json_files:
         return
-    
+
     print(f"Detected JSON files {json_files}")
 
     latest_json_file = json_files[-1]
@@ -70,10 +70,21 @@ def main():
         if not file_name:
             print("::set-output name=exitcode::0")
             return
-        
+
         print(os.listdir("."))
 
         branch_name = f"issue_{issue_number}_branch"
+        subprocess.run(
+            [
+                "git",
+                "config",
+                "--global",
+                "--add",
+                "safe.directory",
+                "/github/workspace",
+            ],
+            check=True,
+        )
         subprocess.run(["git", "checkout", "-b", branch_name], check=True)
         subprocess.run(["git", "add", file_name], check=True)
         commit_message = f"Add issue file: {file_name}"
