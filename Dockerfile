@@ -6,7 +6,8 @@ WORKDIR /app
 # Installing dependency directly in 
 # the app directory
 
-RUN pip install --target=/app pydantic pytest requests
+# RUN pip install --target=/app pydantic pytest requests
+RUN pip install -r requirements.txt
 
 # Let's use a distroless container image for 
 # ptrhon and some basic SSL certificates
@@ -17,4 +18,4 @@ RUN apk update && apk add --no-cache git
 # COPY --from=builder /app /app 
 # WORKDIR /app 
 ENV PYTHONPATH /app 
-CMD ["/app/main.py"]
+CMD ["python","main.py"]
