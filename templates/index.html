@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-TXPKNRW');</script>
+    <meta charset="utf-8">
+    <title>G-PST Open Tools Portal</title>
+</head>
+
+<body>
+
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXPKNRW"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <p>This is the future home of the G-PST open tools portal.
+    It is currently available at
+    <a href="https://g-pst.github.io/tools">g-pst.github.io/tools</a>.</p>
+
+    <h1>Tools</h1>
+    <ul>
+    {% for tool_id, tool in site.data.tools.items() %}
+        <li><a href="{{ site.get_toolurl(tool_id) }}">{{ tool.name }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <h1>Organizations</h1>
+    <ul>
+    {% for org_id, org in site.data.organizations.items() %}
+        <li><a href="{{site.get_orgurl(org_id) }}">{{ org.name }}</a></li>
+    {% endfor %}
+    </ul>
+
+</body>
+</html>

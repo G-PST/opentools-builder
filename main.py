@@ -4,7 +4,7 @@
 import os
 
 from portaldata import PortalData
-from sitegenerator import generate_site
+from sitegenerator import PortalSite
 
 def main():
     """Entry function for github action."""
@@ -17,7 +17,9 @@ def main():
     print(f"Data for testing: {data_path}")
 
     data = PortalData(data_path)
-    generate_site(data)
+
+    site = PortalSite(data)
+    site.generate(baseurl="", outpath="site")
 
 
 if __name__ == "__main__":
