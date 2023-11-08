@@ -3,9 +3,8 @@
 # standard imports
 import os
 
-# third-party imports
-import pytest
-
+from portaldata import PortalData
+from sitegenerator import generate_site
 
 def main():
     """Entry function for github action."""
@@ -17,8 +16,8 @@ def main():
 
     print(f"Data for testing: {data_path}")
 
-    retcode = pytest.main(["-x", "/app"])
-    print(f"::set-output name=exitcode::{retcode}")
+    data = PortalData(data_path)
+    generate_site(data)
 
 
 if __name__ == "__main__":
