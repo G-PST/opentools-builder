@@ -11,6 +11,8 @@ class ProgrammingLanguage(BaseModel):
     """Interface for programming language."""
 
     name: str
+    url: str
+    license: str
     description: Optional[str] = None
 
 
@@ -44,3 +46,6 @@ class SoftwareTool(BaseModel):
     developer: str | List[str]
     license: str | List[str]
     description: Optional[str] = None
+    url_website: Optional[str] = None
+    url_sourcecode: Optional[str] = None
+    url_docs: Optional[str] = None
