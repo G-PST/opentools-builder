@@ -3,6 +3,7 @@ from interface import (
     Licenses,
     Organization,
     Developer,
+    ToolCategory,
     SoftwareTool,
 )
 
@@ -23,6 +24,7 @@ class PortalData():
         self.load_licenses(datapath)
         self.load_organizations(datapath)
         self.load_developers(datapath)
+        self.load_categories(datapath)
         self.load_tools(datapath)
 
     def load_languages(self, datapath: Path):
@@ -74,6 +76,24 @@ class PortalData():
 
             self.developers[dev_id] = dev
 
+    def load_categories(self, datapath: Path):
+
+        self.categories = {}
+
+        for file in (datapath / "categories").iterdir():
+
+            cat = ToolCategory.model_validate(read_file(file))
+            cat_id = file.name.replace(file.suffix, "")
+
+            self.categories[cat_id] = cat
+
+        for cat in self.categories.values():
+
+            if cat.parent:
+                parent_id = normalize(cat.parent)
+                assert parent_id in self.categories.keys()
+                cat.parent = self.categories[parent_id]
+
     def load_tools(self, datapath: Path):
 
         self.tools = {}
@@ -117,6 +137,11 @@ class PortalData():
                     licen_id = normalize(licen_id)
                     assert licen_id in self.licenses.keys()
                     tool.license[i] = self.licenses[licen_id]
+
+            for i, cat_id in enumerate(tool.category):
+                cat_id = normalize(cat_id)
+                assert cat_id in self.categories.keys()
+                tool.category[i] = self.categories[cat_id]
 
             self.tools[tool_id] = tool
 

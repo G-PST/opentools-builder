@@ -31,6 +31,14 @@ class Organization(BaseModel):
     url: Optional[str] = None
 
 
+class ToolCategory(BaseModel):
+    """Interface for tree of software tool categorizations."""
+
+    name: str
+    parent: Optional[str]
+    description: Optional[str]
+
+
 class Developer(BaseModel):
     """Interface for developer/contributor."""
 
@@ -41,7 +49,9 @@ class Developer(BaseModel):
 
 class SoftwareTool(BaseModel):
     """ Interface for software tool. """
+
     name: str 
+    category: List[str]
     language: str | List[str]
     developer: str | List[str]
     license: str | List[str]
