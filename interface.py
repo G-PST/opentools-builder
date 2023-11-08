@@ -39,21 +39,13 @@ class ToolCategory(BaseModel):
     description: Optional[str]
 
 
-class Developer(BaseModel):
-    """Interface for developer/contributor."""
-
-    name: str
-    email: Optional[str]  = None
-    organization: Optional[str]  = None
-
-
 class SoftwareTool(BaseModel):
     """ Interface for software tool. """
 
     name: str 
     category: List[str]
     language: str | List[str]
-    developer: str | List[str]
+    organization: str | List[str]
     license: str | List[str]
     description: Optional[str] = None
     url_website: Optional[str] = None
