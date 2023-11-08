@@ -2,7 +2,6 @@ from interface import (
     ProgrammingLanguage,
     Licenses,
     Organization,
-    Developer,
     ToolCategory,
     SoftwareTool,
 )
@@ -23,7 +22,6 @@ class PortalData():
         self.load_languages(datapath)
         self.load_licenses(datapath)
         self.load_organizations(datapath)
-        self.load_developers(datapath)
         self.load_categories(datapath)
         self.load_tools(datapath)
 
@@ -59,22 +57,6 @@ class PortalData():
             org_id = file.name.replace(file.suffix, "")
 
             self.organizations[org_id] = org
-
-    def load_developers(self, datapath: Path):
-
-        self.developers = {}
-
-        for file in (datapath / "developers").iterdir():
-
-            dev = Developer.model_validate(read_file(file))
-            dev_id = file.name.replace(file.suffix, "")
-
-            if dev.organization:
-                org_id = normalize(dev.organization)
-                assert org_id in self.organizations.keys()
-                dev.organization = self.organizations[org_id]
-
-            self.developers[dev_id] = dev
 
     def load_categories(self, datapath: Path):
 
@@ -115,16 +97,16 @@ class PortalData():
                     assert lang_id in self.languages.keys()
                     tool.language[i] = self.languages[lang_id]
 
-            if isinstance(tool.developer, str):
-                dev_id = normalize(tool.developer)
-                assert dev_id in self.developers.keys()
-                tool.developer = [self.developers[dev_id]]
+            if isinstance(tool.organization, str):
+                org_id = normalize(tool.organization)
+                assert org_id in self.organizations.keys()
+                tool.organization = [self.organizations[org_id]]
 
             else:
-                for i, dev_id in enumerate(soft.developers):
-                    dev_id = normalize(dev_id)
-                    assert dev_id in self.developers.keys()
-                    tool.developer[i] = self.developers[dev_id]
+                for i, org_id in enumerate(tool.organization):
+                    org_id = normalize(org_id)
+                    assert org_id in self.organizations.keys()
+                    tool.organization[i] = self.organizations[org_id]
 
             if isinstance(tool.license, str):
                 licen_id = normalize(tool.license)

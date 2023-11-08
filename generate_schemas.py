@@ -12,7 +12,6 @@ import pydantic
 from interface import (
     ProgrammingLanguage,
     Licenses,
-    Developer,
     Organization,
     ToolCategory,
     SoftwareTool,
@@ -55,7 +54,6 @@ if __name__ == "__main__":
     schema_manager = SchemaManager(schema_folder="../schemas")
     schema_manager.add_schema("programming_languages", ProgrammingLanguage)
     schema_manager.add_schema("licenses", Licenses)
-    schema_manager.add_schema("developers", Developer)
     schema_manager.add_schema("category", ToolCategory)
     schema_manager.add_schema("software_tool", SoftwareTool)
     schema_manager.add_schema("organization", Organization)
