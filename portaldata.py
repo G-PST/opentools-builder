@@ -85,40 +85,20 @@ class PortalData():
             tool = SoftwareTool.model_validate(read_file(file))
             tool_id = file.name.replace(file.suffix, "")
 
-
-            if isinstance(tool.language, str):
-                lang_id = normalize(tool.language)
+            for i, lang_id in enumerate(tool.language):
+                lang_id = normalize(lang_id)
                 assert lang_id in self.languages.keys()
-                tool.language = [self.languages[lang_id]]
+                tool.language[i] = self.languages[lang_id]
 
-            else:
-                for i, lang_id in enumerate(tool.language):
-                    lang_id = normalize(lang_id)
-                    assert lang_id in self.languages.keys()
-                    tool.language[i] = self.languages[lang_id]
-
-            if isinstance(tool.organization, str):
-                org_id = normalize(tool.organization)
+            for i, org_id in enumerate(tool.organization):
+                org_id = normalize(org_id)
                 assert org_id in self.organizations.keys()
-                tool.organization = [self.organizations[org_id]]
+                tool.organization[i] = self.organizations[org_id]
 
-            else:
-                for i, org_id in enumerate(tool.organization):
-                    org_id = normalize(org_id)
-                    assert org_id in self.organizations.keys()
-                    tool.organization[i] = self.organizations[org_id]
-
-            if isinstance(tool.license, str):
-                licen_id = normalize(tool.license)
-                licen_id = licen_id.lower().replace(" ", "")
+            for i, licen_id in enumerate(tool.license):
+                licen_id = normalize(licen_id)
                 assert licen_id in self.licenses.keys()
-                tool.license = [self.licenses[licen_id]]
-
-            else:
-                for i, licen_id in enumerate(soft.license):
-                    licen_id = normalize(licen_id)
-                    assert licen_id in self.licenses.keys()
-                    tool.license[i] = self.licenses[licen_id]
+                tool.license[i] = self.licenses[licen_id]
 
             for i, cat_id in enumerate(tool.category):
                 cat_id = normalize(cat_id)
