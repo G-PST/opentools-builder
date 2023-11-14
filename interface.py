@@ -44,9 +44,9 @@ class SoftwareTool(BaseModel):
 
     name: str 
     category: List[str]
-    language: str | List[str]
-    organization: str | List[str]
-    license: str | List[str]
+    language: List[str]
+    organization: List[str]
+    license: List[str]
     description: Optional[str] = None
     url_website: Optional[str] = None
     url_sourcecode: Optional[str] = None
