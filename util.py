@@ -25,7 +25,7 @@ def write_file(data: Dict, file_path: Path) -> None:
 
     if file_path.suffix == ".json":
         with open(file_path, "w", encoding="utf-8") as file_pointer:
-            json.dump(data, file_pointer)
+            json.dump(data, file_pointer, indent=4)
         return
     raise NotImplementedError(
         f"Writing file of type {file_path.suffix} is not implemented."
