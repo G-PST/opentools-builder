@@ -7,11 +7,19 @@ from urllib.parse import urljoin
 import jinja2
 
 from portaldata import PortalData
+import util
 
 def writefile(filepath: Path, text: str):
 
     with io.open(filepath, 'w') as f:
         f.write(text)
+
+def make_manifest(vals: dict):
+
+    return [
+        { "id": id, "name": val.name }
+        for id, val in vals.items()
+    ]
 
 class PortalSite():
 
@@ -41,6 +49,8 @@ class PortalSite():
         self.generate_home()
         self.generate_tools()
         self.generate_orgs()
+
+        self.generate_manifest()
 
     def get_toolpath(self, tool_id):
         return PurePosixPath("tools") / tool_id
@@ -85,3 +95,18 @@ class PortalSite():
 
             os.makedirs(dir)
             writefile(filepath, template.render(site=self, org=org))
+
+    def generate_manifest(self):
+
+        manifest = {
+            "licenses": make_manifest(self.data.licenses),
+            "organizations": make_manifest(self.data.organizations),
+            "categories": make_manifest(self.data.categories),
+            "languages": make_manifest(self.data.languages),
+            "software": make_manifest(self.data.tools),
+        }
+
+        filepath = self.outpath / "manifest.json"
+
+        util.write_file(manifest, filepath)
+
