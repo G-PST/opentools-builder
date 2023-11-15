@@ -12,7 +12,7 @@ class ProgrammingLanguage(BaseModel):
 
     name: str
     url: str
-    license: List[str]
+    licenses: List[str]
     description: Optional[str] = None
 
 
@@ -43,10 +43,10 @@ class SoftwareTool(BaseModel):
     """ Interface for software tool. """
 
     name: str 
-    category: List[str]
-    language: List[str]
-    organization: List[str]
-    license: List[str]
+    categories: List[str]
+    languages: List[str]
+    organizations: List[str]
+    licenses: List[str]
     description: Optional[str] = None
     url_website: Optional[str] = None
     url_sourcecode: Optional[str] = None
