@@ -19,10 +19,10 @@ class PortalData():
 
         datapath = Path(datapath)
 
-        self.load_languages(datapath)
         self.load_licenses(datapath)
         self.load_organizations(datapath)
         self.load_categories(datapath)
+        self.load_languages(datapath)
         self.load_tools(datapath)
 
     def load_languages(self, datapath: Path):
@@ -33,6 +33,11 @@ class PortalData():
 
             lang = ProgrammingLanguage.model_validate(read_file(file))
             lang_id = file.name.replace(file.suffix, "")
+
+            for i, licen_id in enumerate(lang.license):
+                licen_id = normalize(licen_id)
+                assert licen_id in self.licenses.keys()
+                lang.license[i] = self.licenses[licen_id]
 
             self.languages[lang_id] = lang
 
