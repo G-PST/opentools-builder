@@ -34,10 +34,10 @@ class PortalData():
             lang = ProgrammingLanguage.model_validate(read_file(file))
             lang_id = file.name.replace(file.suffix, "")
 
-            for i, licen_id in enumerate(lang.license):
+            for i, licen_id in enumerate(lang.licenses):
                 licen_id = normalize(licen_id)
                 assert licen_id in self.licenses.keys()
-                lang.license[i] = self.licenses[licen_id]
+                lang.licenses[i] = self.licenses[licen_id]
 
             self.languages[lang_id] = lang
 
@@ -90,25 +90,25 @@ class PortalData():
             tool = SoftwareTool.model_validate(read_file(file))
             tool_id = file.name.replace(file.suffix, "")
 
-            for i, lang_id in enumerate(tool.language):
+            for i, lang_id in enumerate(tool.languages):
                 lang_id = normalize(lang_id)
                 assert lang_id in self.languages.keys()
-                tool.language[i] = self.languages[lang_id]
+                tool.languages[i] = self.languages[lang_id]
 
-            for i, org_id in enumerate(tool.organization):
+            for i, org_id in enumerate(tool.organizations):
                 org_id = normalize(org_id)
                 assert org_id in self.organizations.keys()
-                tool.organization[i] = self.organizations[org_id]
+                tool.organizations[i] = self.organizations[org_id]
 
-            for i, licen_id in enumerate(tool.license):
+            for i, licen_id in enumerate(tool.licenses):
                 licen_id = normalize(licen_id)
                 assert licen_id in self.licenses.keys()
-                tool.license[i] = self.licenses[licen_id]
+                tool.licenses[i] = self.licenses[licen_id]
 
-            for i, cat_id in enumerate(tool.category):
+            for i, cat_id in enumerate(tool.categories):
                 cat_id = normalize(cat_id)
                 assert cat_id in self.categories.keys()
-                tool.category[i] = self.categories[cat_id]
+                tool.categories[i] = self.categories[cat_id]
 
             self.tools[tool_id] = tool
 
