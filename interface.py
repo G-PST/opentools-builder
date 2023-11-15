@@ -12,7 +12,7 @@ class ProgrammingLanguage(BaseModel):
 
     name: str
     url: str
-    license: str
+    license: List[str]
     description: Optional[str] = None
 
 
