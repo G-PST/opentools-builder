@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Installing dependency directly in 
 # the app directory
-RUN pip install --target=/app pydantic
+RUN pip install --target=/app pydantic jinja2
 
 # Let's use a distroless container image for 
 # ptrhon and some basic SSL certificates
