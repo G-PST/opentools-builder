@@ -35,8 +35,8 @@ class ToolCategory(BaseModel):
     """Interface for tree of software tool categorizations."""
 
     name: str
-    parent: Optional[str]
-    description: Optional[str]
+    parent: Optional[str] = None
+    description: Optional[str] = None
 
 
 class SoftwareTool(BaseModel):
