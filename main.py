@@ -1,26 +1,29 @@
 """ Entry python module for github action. """
 
 # standard imports
-import os
+import sys
 
 from portaldata import PortalData
 from sitegenerator import PortalSite
 
-def main():
+def main(data_path: str, template_path: str, site_path: str, base_url: str):
     """Entry function for github action."""
-    try:
-        data_path = os.environ["INPUT_DATAPATH"]
-    except KeyError as _:
-        data_path = "data"
-        os.environ["INPUT_DATAPATH"] = data_path
 
-    print(f"Data for testing: {data_path}")
-
+    print(f"Loading data from: {data_path}")
     data = PortalData(data_path)
 
-    site = PortalSite(data)
-    site.generate(baseurl="", outpath="site")
+    print(f"Loading site templates from: {template_path}")
+    site = PortalSite(data, template_path)
+
+    print(f"Generating site in: {site_path}")
+    site.generate(baseurl=base_url, outpath=site_path)
 
 
 if __name__ == "__main__":
-    main()
+
+    data_path = sys.argv[1]
+    template_path = sys.argv[2]
+    site_path = sys.argv[3]
+    base_url = sys.argv[4]
+
+    main(data_path, template_path, site_path, base_url)

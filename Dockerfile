@@ -1,17 +1,9 @@
-FROM python:3-slim AS builder
-ADD . /app 
-WORKDIR /app
+FROM python:3-slim
+COPY . /app
+RUN pip install pydantic jinja2
 
-# Installing dependency directly in 
-# the app directory
-RUN pip install --target=/app pydantic jinja2
-
-# Let's use a distroless container image for 
-# ptrhon and some basic SSL certificates
-# https://github.com/GoogleContainerTools/distroless
-
-FROM gcr.io/distroless/python3-debian12
-COPY --from=builder /app /app 
-# WORKDIR /app 
-ENV PYTHONPATH /app 
-CMD ["/app/main.py"]
+CMD python3 -u /app/main.py \
+    /github/workspace/$INPUT_DATAPATH \
+    /app/templates \
+    /github/workspace/$INPUT_SITEPATH \
+    $INPUT_BASEURL
