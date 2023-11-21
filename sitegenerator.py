@@ -23,12 +23,12 @@ def make_manifest(vals: dict):
 
 class PortalSite():
 
-    def __init__(self, data: PortalData):
+    def __init__(self, data: PortalData, template_path: str):
 
         self.data = data
 
         t_env = jinja2.Environment(
-                    loader=jinja2.FileSystemLoader("templates"),
+                    loader=jinja2.FileSystemLoader(template_path),
                     autoescape=jinja2.select_autoescape())
 
         self.templates = {

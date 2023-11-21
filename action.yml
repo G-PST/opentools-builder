@@ -1,13 +1,21 @@
-name: "GPST Opensource Tool Validator"
-description: "Use this validator to validate the data in GPST opentools repo"
-author: "Kapil Duwadi"
+name: "G-PST Open Tools Portal Builder"
+description: "Validates opentools source data and builds the portal website"
+author: "Kapil Duwadi and Gord Stephen"
+
 inputs:
   datapath:
-    description: "Path to data folder which is to be tested. By default assumes 'data' folder exists at the root of the repo."
-    required: false 
-outputs:
-  exitcode:
-    description: "Returns exit code after running pytest."
+    description: "Path to source data folder. Defaults to 'data'."
+    required: false
+    default: "data"
+  sitepath:
+    description: "Path to folder in which to generate site. Defaults to 'site'."
+    required: false
+    default: "site"
+  baseurl:
+    description: "URL prefix to be applied to links within the generated site."
+    required: false
+    default: "/"
+
 runs:
   using: docker
   image: "Dockerfile"
