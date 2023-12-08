@@ -10,6 +10,7 @@
                 })(window,document,'script','dataLayer','GTM-TXPKNRW');</script>
     <meta charset="utf-8">
     <title>G-PST Open Tools Portal</title>
+    <link rel="stylesheet" href="{{site.base_url}}/styles.css">
 </head>
 
 <body>
@@ -17,22 +18,73 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXPKNRW"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-    <p>This is the future home of the G-PST open tools portal.
-    It is currently available at
-    <a href="https://g-pst.github.io/tools">g-pst.github.io/tools</a>.</p>
+    <p id="construction-banner">
+        This is the future home of the G-PST Open Tools Portal.
+        It is currently available at
+        <a href="https://g-pst.github.io/tools">g-pst.github.io/tools</a>.
+    </p>
 
-    <h1>Tools</h1>
-    <ul>
-    {% for tool_id, tool in site.data.tools.items() %}
-        <li><a href="{{ site.get_toolurl(tool_id) }}">{{ tool.name }}</a></li>
-    {% endfor %}
-    </ul>
+    <header>
+        <div id="header-contents">
+            <a href="https://globalpst.org">
+                <img id="header-logo" src="https://globalpst.org/wp-content/uploads/GPSTC-logo-blk-x2.png" / alt="Global Power System Transformation Consortium">
+            </a>
+            <h1 id="header-title">Open Tools Portal</h1>
+            <a id="header-button" href="{{site.base_url}}/contribute">Contribute</a>
+        </div>
+    </header>
 
-    <h1>Organizations</h1>
-    <ul>
-    {% for org_id, org in site.data.organizations.items() %}
-        <li><a href="{{site.get_orgurl(org_id) }}">{{ org.name }}</a></li>
-    {% endfor %}
+
+    <div id="contents">
+    <ul class="category-list">
+        {% for category_id, category in site.data.categories | dictsort %}
+        {% if (category.tools or category.children) and not category.parent %}
+        <li class="category">
+
+            <a class="category-title" href="{{ site.get_categoryurl(category_id) }}">
+                {{ category.name }}
+            </a>
+
+            {% if category.tools | count %}
+            <ul class="category-tool-list">
+                {% for tool in category.tools %}
+                <li class="category-tool">
+                    <a class="tool-title" href="{{ site.get_toolurl(tool.id) }}">
+                        {{ tool.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if category.children | count %}
+            <ul class="subcategory-list">
+                {% for subcategory in category.children %}
+                {% if subcategory.tools %}
+                <li class="subcategory">
+                    <a class="subcategory-title" href="{{ site.get_categoryurl(subcategory.id) }}">
+                        {{ subcategory.name }}
+                    </a>
+                    {% if subcategory.tools | count %}
+                    <ul class="subcategory-tool-list">
+                        {% for tool in subcategory.tools %}
+                        <li class="subcategory-tool">
+                            <a class="tool-title" href="{{ site.get_toolurl(tool.id) }}">
+                                {{ tool.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+        </li>
+        {% endif %}
+        {% endfor %}
     </ul>
 
 </body>
