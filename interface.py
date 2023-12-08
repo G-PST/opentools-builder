@@ -4,7 +4,7 @@
 from typing import Optional, List
 
 # third-party imports
-from pydantic import BaseModel
+from pydantic import BaseModel, Extra
 
 
 class ProgrammingLanguage(BaseModel):
@@ -31,7 +31,7 @@ class Organization(BaseModel):
     url: Optional[str] = None
 
 
-class ToolCategory(BaseModel):
+class ToolCategory(BaseModel, extra=Extra.allow):
     """Interface for tree of software tool categorizations."""
 
     name: str
@@ -39,7 +39,7 @@ class ToolCategory(BaseModel):
     description: Optional[str] = None
 
 
-class SoftwareTool(BaseModel):
+class SoftwareTool(BaseModel, extra=Extra.allow):
     """ Interface for software tool. """
 
     name: str 

@@ -23,12 +23,14 @@ def make_manifest(vals: dict):
 
 class PortalSite():
 
-    def __init__(self, data: PortalData, template_path: str):
+    def __init__(self, data: PortalData, template_path: str, static_path: str):
 
         self.data = data
+        self.template_path = template_path
+        self.static_path = static_path
 
         t_env = jinja2.Environment(
-                    loader=jinja2.FileSystemLoader(template_path),
+                    loader=jinja2.FileSystemLoader(self.template_path),
                     autoescape=jinja2.select_autoescape())
 
         self.templates = {
@@ -41,10 +43,9 @@ class PortalSite():
     def generate(self, baseurl: str, outpath: str):
 
         self.outpath = Path(outpath)
-        shutil.rmtree(self.outpath, ignore_errors=True)
-        os.makedirs(self.outpath)
-
         self.baseurl = baseurl
+
+        self.create_sitedir()
 
         self.generate_home()
         self.generate_tools()
@@ -65,6 +66,17 @@ class PortalSite():
     def get_orgurl(self, org_id):
         relpath = self.get_orgpath(org_id).as_posix()
         return urljoin(self.baseurl, relpath)
+
+    def get_categorypath(self, cat_id):
+        return PurePosixPath("categories") / cat_id
+
+    def get_categoryurl(self, cat_id):
+        relpath = self.get_categorypath(cat_id).as_posix()
+        return urljoin(self.baseurl, relpath)
+
+    def create_sitedir(self):
+        shutil.rmtree(self.outpath, ignore_errors=True)
+        shutil.copytree(self.static_path, self.outpath)
 
     def generate_home(self):
 

@@ -70,9 +70,12 @@ class PortalData():
         for file in (datapath / "categories").iterdir():
 
             cat = ToolCategory.model_validate(read_file(file))
-            cat_id = file.name.replace(file.suffix, "")
 
-            self.categories[cat_id] = cat
+            cat.id = file.name.replace(file.suffix, "")
+            cat.children = []
+            cat.tools = []
+
+            self.categories[cat.id] = cat
 
         for cat in self.categories.values():
 
@@ -80,6 +83,7 @@ class PortalData():
                 parent_id = normalize(cat.parent)
                 assert parent_id in self.categories.keys()
                 cat.parent = self.categories[parent_id]
+                cat.parent.children.append(cat)
 
     def load_tools(self, datapath: Path):
 
@@ -88,7 +92,7 @@ class PortalData():
         for file in (datapath /"software").iterdir():
 
             tool = SoftwareTool.model_validate(read_file(file))
-            tool_id = file.name.replace(file.suffix, "")
+            tool.id = file.name.replace(file.suffix, "")
 
             for i, lang_id in enumerate(tool.languages):
                 lang_id = normalize(lang_id)
@@ -108,7 +112,9 @@ class PortalData():
             for i, cat_id in enumerate(tool.categories):
                 cat_id = normalize(cat_id)
                 assert cat_id in self.categories.keys()
-                tool.categories[i] = self.categories[cat_id]
+                cat = self.categories[cat_id]
+                tool.categories[i] = cat
+                cat.tools.append(tool)
 
-            self.tools[tool_id] = tool
+            self.tools[tool.id] = tool
 
