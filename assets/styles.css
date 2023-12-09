@@ -1,23 +1,32 @@
 html, body {
     padding: 0;
     margin: 0;
+    width: 100%;
+    height: 100%;
     font-family: sans-serif;
     --gpst-blue: #0f4292;
     --gpst-blue-dark: #073473;
+    --max-width: 1200px;
 }
 
 a {
     color: var(--gpst-blue);
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 #construction-banner {
+    flex-shrink: 0;
     display: block;
     color: white;
     background-color: red;
     max-width: 100%;
     text-align: center;
     padding: 1em;
-    margin: 0 auto;
+    margin: 0;
 }
 
 #construction-banner a {
@@ -29,22 +38,34 @@ header {
 }
 
 #header-contents {
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    max-width: 1200px;
+    max-width: var(--max-width);
 }
 
-#header-logo {
+#header-title {
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+}
+
+#header-title img {
     height: 80px;
     padding: 10px;
 }
 
-#header-title {
+#header-title h1 {
     flex-grow: 1;
     margin-left: 0.5em;
     font-size: 1.5em;
+}
+
+#header-nav {
+    flex-grow: 1;
 }
 
 #header-button {
@@ -60,16 +81,20 @@ header {
     background-color: var(--gpst-blue-dark);
 }
 
-#contents {
-    max-width: 1200px;
+main {
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--max-width);
     margin: 0 auto;
+    padding: 0 1em;
 }
 
 .category-list {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
-    padding: 0 1em;
+    padding: 0;
 }
 
 .category {
@@ -137,4 +162,50 @@ header {
 }
 .tool-title:hover {
     background-color: var(--gpst-blue);
+}
+
+footer {
+    flex-shrink: 0;
+    background-color: var(--gpst-blue);
+    font-size: 0.8em;
+    color: #FFF;
+}
+
+footer a {
+    color: #FFF;
+}
+
+footer a:hover {
+    color: #DDD;
+}
+
+#footer-contents {
+    display: flex;
+    align-items: center;
+    margin: 0px auto;
+    padding: 1em 2em;
+    max-width: var(--max-width);
+}
+
+#footer-blurb {
+    max-width: 50%;
+}
+
+#footer-socials {
+    flex-grow: 1;
+    text-align: right;
+}
+
+#footer-socials ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+}
+
+#footer-socials li {
+    display: block;
+}
+
+#footer-socials svg {
+    height: 2em;
 }

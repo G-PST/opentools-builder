@@ -1,1 +1,8 @@
-{{ org.name }}
+{% extends "base.html" %}
+{% block title %}{{ org.name }} | {% endblock %}
+{% block body %}
+<h1>{{ org.name }}</h1>
+{% if org.description %}
+<p>{{ org.description }}</p>
+{% endif %}
+{% endblock %}

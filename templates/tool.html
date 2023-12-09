@@ -1,1 +1,8 @@
-{{ tool.name }}
+{% extends "base.html" %}
+{% block title %}{{ tool.name }} | {% endblock %}
+{% block body %}
+<h1>{{ tool.name }}</h1>
+{% if tool.description %}
+<p>{{ tool.description }}</p>
+{% endif %}
+{% endblock %}
