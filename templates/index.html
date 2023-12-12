@@ -1,11 +1,11 @@
-{% extends "base.html" %}
-{% block body %}
+{% extends "nosidebar.html" %}
+{% block main %}
 <ul class="category-list">
     {% for category_id, category in site.data.categories | dictsort %}
     {% if (category.tools or category.children) and not category.parent %}
     <li class="category">
 
-        <a class="category-title" href="{{ site.get_categoryurl(category_id) }}">
+        <a class="category-title" href="{{ site.get_url(category) }}">
             {{ category.name }}
         </a>
 
@@ -13,7 +13,7 @@
         <ul class="category-tool-list">
             {% for tool in category.tools %}
             <li class="category-tool">
-                <a class="tool-title" href="{{ site.get_toolurl(tool.id) }}">
+                <a class="tool-title" href="{{ site.get_url(tool) }}">
                     {{ tool.name }}
                 </a>
             </li>
@@ -26,14 +26,14 @@
             {% for subcategory in category.children %}
             {% if subcategory.tools %}
             <li class="subcategory">
-                <a class="subcategory-title" href="{{ site.get_categoryurl(subcategory.id) }}">
+                <a class="subcategory-title" href="{{ site.get_url(subcategory) }}">
                     {{ subcategory.name }}
                 </a>
                 {% if subcategory.tools | count %}
                 <ul class="subcategory-tool-list">
                     {% for tool in subcategory.tools %}
                     <li class="subcategory-tool">
-                        <a class="tool-title" href="{{ site.get_toolurl(tool.id) }}">
+                        <a class="tool-title" href="{{ site.get_url(tool) }}">
                             {{ tool.name }}
                         </a>
                     </li>

@@ -7,7 +7,7 @@ from typing import Optional, List
 from pydantic import BaseModel, Extra
 
 
-class ProgrammingLanguage(BaseModel):
+class ProgrammingLanguage(BaseModel, extra=Extra.allow):
     """Interface for programming language."""
 
     name: str
@@ -16,14 +16,14 @@ class ProgrammingLanguage(BaseModel):
     description: Optional[str] = None
 
 
-class Licenses(BaseModel):
+class Licenses(BaseModel, extra=Extra.allow):
     """Interface for opensource licenses."""
 
     name: str
-    spdx_id: str
+    spdx_id: Optional[str] = None
 
 
-class Organization(BaseModel):
+class Organization(BaseModel, extra=Extra.allow):
     """Interface for organization."""
 
     name: str

@@ -6,9 +6,9 @@ from interface import (
     SoftwareTool,
 )
 
+from pathlib import Path, PurePosixPath
 from util import read_file, write_file
 
-from pathlib import Path
 
 def normalize(x: str):
     return x.lower().replace(" ", "")
@@ -32,14 +32,17 @@ class PortalData():
         for file in (datapath / "languages").iterdir():
 
             lang = ProgrammingLanguage.model_validate(read_file(file))
-            lang_id = file.name.replace(file.suffix, "")
+
+            lang.id = file.name.replace(file.suffix, "")
+            lang.path = PurePosixPath("programming-languages") / lang.id
+            lang.tools = []
 
             for i, licen_id in enumerate(lang.licenses):
                 licen_id = normalize(licen_id)
                 assert licen_id in self.licenses.keys()
                 lang.licenses[i] = self.licenses[licen_id]
 
-            self.languages[lang_id] = lang
+            self.languages[lang.id] = lang
 
     def load_licenses(self, datapath: Path):
 
@@ -48,9 +51,12 @@ class PortalData():
         for file in (datapath / "licenses").iterdir():
 
             licen = Licenses.model_validate(read_file(file))
-            licen_id = file.name.replace(file.suffix, "")
 
-            self.licenses[licen_id] = licen
+            licen.id = file.name.replace(file.suffix, "")
+            licen.path = PurePosixPath("licenses") / licen.id
+            licen.tools = []
+
+            self.licenses[licen.id] = licen
 
     def load_organizations(self, datapath: Path):
 
@@ -59,9 +65,12 @@ class PortalData():
         for file in (datapath / "organizations").iterdir():
 
             org = Organization.model_validate(read_file(file))
-            org_id = file.name.replace(file.suffix, "")
 
-            self.organizations[org_id] = org
+            org.id = file.name.replace(file.suffix, "")
+            org.path = PurePosixPath("organizations") / org.id
+            org.tools = []
+
+            self.organizations[org.id] = org
 
     def load_categories(self, datapath: Path):
 
@@ -72,6 +81,7 @@ class PortalData():
             cat = ToolCategory.model_validate(read_file(file))
 
             cat.id = file.name.replace(file.suffix, "")
+            cat.path = PurePosixPath("categories") / cat.id
             cat.children = []
             cat.tools = []
 
@@ -93,21 +103,28 @@ class PortalData():
 
             tool = SoftwareTool.model_validate(read_file(file))
             tool.id = file.name.replace(file.suffix, "")
+            tool.path = PurePosixPath("tools") / tool.id
 
             for i, lang_id in enumerate(tool.languages):
                 lang_id = normalize(lang_id)
                 assert lang_id in self.languages.keys()
-                tool.languages[i] = self.languages[lang_id]
+                lang = self.languages[lang_id]
+                tool.languages[i] = lang
+                lang.tools.append(tool)
 
             for i, org_id in enumerate(tool.organizations):
                 org_id = normalize(org_id)
                 assert org_id in self.organizations.keys()
-                tool.organizations[i] = self.organizations[org_id]
+                org = self.organizations[org_id]
+                tool.organizations[i] = org
+                org.tools.append(tool)
 
             for i, licen_id in enumerate(tool.licenses):
                 licen_id = normalize(licen_id)
                 assert licen_id in self.licenses.keys()
-                tool.licenses[i] = self.licenses[licen_id]
+                licen = self.licenses[licen_id]
+                tool.licenses[i] = licen
+                licen.tools.append(tool)
 
             for i, cat_id in enumerate(tool.categories):
                 cat_id = normalize(cat_id)

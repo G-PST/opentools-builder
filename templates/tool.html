@@ -1,8 +1,53 @@
-{% extends "base.html" %}
+{% extends "withsidebar.html" %}
+
 {% block title %}{{ tool.name }} | {% endblock %}
-{% block body %}
+
+{% block main %}
 <h1>{{ tool.name }}</h1>
 {% if tool.description %}
 <p>{{ tool.description }}</p>
+{% endif %}
+{% endblock %}
+
+{% block side %}
+{% if tool.categories %}
+<div id="tool-categories">
+    <h2>Categories</h2>
+    <ul>
+        {% for cat in tool.categories %}
+        <li><a href="{{site.get_url(cat)}}">{{ cat.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% if tool.organizations %}
+<div id="tool-organizations">
+    <h2>Developers</h2>
+    <ul>
+        {% for org in tool.organizations %}
+        <li><a href="{{site.get_url(org)}}">{{ org.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% if tool.licenses %}
+<div id="tool-licenses">
+    <h2>Licenses</h2>
+    <ul>
+        {% for license in tool.licenses %}
+        <li><a href="{{site.get_url(license)}}">{{ license.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% if tool.languages %}
+<div id="tool-languages">
+    <h2>Programming Languages</h2>
+    <ul>
+        {% for lang in tool.languages %}
+        <li><a href="{{site.get_url(lang)}}">{{ lang.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 {% endif %}
 {% endblock %}

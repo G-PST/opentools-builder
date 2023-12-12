@@ -1,32 +1,39 @@
 {% extends "nosidebar.html" %}
 
-{% block title %}{{ org.name }} | {% endblock %}
+{% block title %}{{ category.name }} | {% endblock %}
 
 {% block main %}
-
-<h1>{{ org.name }}</h1>
-
-{% if org.description %}
-<p>{{ org.description }}</p>
+<h1>{{ category.name }}</h1>
+{% if category.description %}
+<p>{{ category.description }}</p>
 {% endif %}
-
-{% if org.tools %}
+{% if category.children %}
+<div class="category-subcategories">
+    Subcategories:
+    <ul>
+    {% for subcat in category.children %}
+        <li><a href="{{site.get_url(subcat)}}">{{subcat.name}}</a></li>{% if not loop.last %}, {% endif %}
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% if category.tools %}
 <table class="tools-table">
     <thead><tr>
         <th>Tool</th>
-        <th>Category(s)</th>
+        <th>Developer(s)</th>
         <th>Programming Language(s)</th>
         <th>License(s)</th>
     </tr></thead>
     <tbody>
-        {% for tool in org.tools %}
+        {% for tool in category.tools %}
         <tr>
             <td class="tools-table-tool">
                 <a href="{{ site.get_url(tool) }}">{{ tool.name }}</a>
             </td>
-            <td class="tools-table-categories"><ul>
-                {% for cat in tool.categories %}
-                <li><a href="{{ site.get_url(cat) }}">{{ cat.name }}</a></li>{% if not loop.last %}, {% endif %}
+            <td class="tools-table-developers"><ul>
+                {% for org in tool.organizations %}
+                <li><a href="{{ site.get_url(org) }}">{{ org.name }}</a></li>{% if not loop.last %}, {% endif %}
                 {% endfor %}
             </ul></td>
             <td class="tools-table-proglangs"><ul>
@@ -45,5 +52,4 @@
     <tfoot><tr><th> </th></tr></tfoot>
 </table>
 {% endif %}
-
 {% endblock %}
