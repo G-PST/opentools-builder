@@ -7,4 +7,6 @@ CMD python3 -u /app/main.py \
     /app/templates \
     /app/assets \
     /github/workspace/$INPUT_SITEPATH \
+    /github/workspace/$INPUT_ERRORPATH \
+    $GITHUB_OUTPUT \
     $INPUT_BASEURL

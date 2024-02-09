@@ -11,6 +11,10 @@ inputs:
     description: "Path to folder in which to generate site. Defaults to 'site'."
     required: false
     default: "site"
+  errorpath:
+    description: "Path to file in which to write details of any parse errors. Defaults to 'errormessage.md'."
+    required: false
+    default: "errormessage.md"
   baseurl:
     description: "URL prefix to be applied to links within the generated site."
     required: false
