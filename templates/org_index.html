@@ -1,0 +1,29 @@
+{% extends "nosidebar.html" %}
+
+{% block title %}Organizations | {% endblock %}
+
+{% block main %}
+
+<h1>Organizations</h1>
+
+<table class="tools-table">
+    <thead><tr>
+        <th>Organization</th>
+        <th>Tools</th>
+    </tr></thead>
+    <tbody>
+        {% for org_id, org in site.data.organizations | dictsort %}
+        <tr>
+            <td class="tools-table-developers">
+                <a href="{{ site.get_url(org) }}">{{ org.name }}</a>
+            </td>
+            <td class="tools-table-toolcount">
+                {{ org.tools | count }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot><tr><th> </th></tr></tfoot>
+</table>
+
+{% endblock %}

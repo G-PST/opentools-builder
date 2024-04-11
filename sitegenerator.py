@@ -33,13 +33,26 @@ class PortalSite():
                     loader=jinja2.FileSystemLoader(self.template_path),
                     autoescape=jinja2.select_autoescape())
 
+        self.entity_names = {
+            "tools": "tool",
+            "organizations": "org",
+            "categories": "category",
+            "programming-languages": "proglang",
+            "licenses": "license",
+        }
+
         self.templates = {
             "home": t_env.get_template("index.html"),
-            "tool": t_env.get_template("tool.html"),
-            "org": t_env.get_template("organization.html"),
-            "category": t_env.get_template("category.html"),
-            "proglang": t_env.get_template("programminglanguage.html"),
-            "license": t_env.get_template("license.html"),
+            "tools": t_env.get_template("tool.html"),
+            "organizations": t_env.get_template("organization.html"),
+            "categories": t_env.get_template("category.html"),
+            "programming-languages": t_env.get_template("programminglanguage.html"),
+            "licenses": t_env.get_template("license.html"),
+        }
+
+        self.index_templates = {
+            "tools": t_env.get_template("tool_index.html"),
+            "organizations": t_env.get_template("org_index.html"),
         }
 
 
@@ -47,17 +60,19 @@ class PortalSite():
 
         self.outpath = Path(outpath)
         self.baseurl = baseurl
+        self.tools_url = urljoin(baseurl, "tools")
+        self.orgs_url = urljoin(baseurl, "organizations")
 
         self.create_sitedir()
 
         self.generate_home()
         self.generate_manifest()
 
-        self.generate_pages("tool", self.data.tools)
-        self.generate_pages("org", self.data.organizations)
-        self.generate_pages("category", self.data.categories)
-        self.generate_pages("proglang", self.data.languages)
-        self.generate_pages("license", self.data.licenses)
+        self.generate_pages("tools", self.data.tools)
+        self.generate_pages("organizations", self.data.organizations)
+        self.generate_pages("categories", self.data.categories)
+        self.generate_pages("programming-languages", self.data.languages)
+        self.generate_pages("licenses", self.data.licenses)
 
     def get_url(self, entity):
         return urljoin(self.baseurl, entity.path.as_posix())
@@ -80,8 +95,17 @@ class PortalSite():
 
             dir = self.outpath / entity.path
             os.makedirs(dir)
-            template_args = {"site": self, entity_type: entity}
+            template_args = {
+                "site": self,
+                self.entity_names[entity_type]: entity
+            }
             writefile(dir / "index.html", template.render(**template_args))
+
+        if entity_type in self.index_templates:
+
+            template = self.index_templates[entity_type]
+            filepath = self.outpath / entity_type / "index.html"
+            writefile(filepath, template.render(site=self))
 
     def generate_manifest(self):
 

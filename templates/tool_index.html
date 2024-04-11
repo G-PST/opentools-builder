@@ -1,0 +1,49 @@
+{% extends "nosidebar.html" %}
+
+{% block title %}Tools | {% endblock %}
+
+{% block main %}
+
+<h1>Tools</h1>
+
+<table class="tools-table">
+    <thead><tr>
+        <th>Tool</th>
+        <th>Category(s)</th>
+        <th>Developer(s)</th>
+        <th>Programming Language(s)</th>
+        <th>License(s)</th>
+    </tr></thead>
+    <tbody>
+        {% for tool_id, tool in site.data.tools | dictsort %}
+        <tr>
+            <td class="tools-table-tool">
+                <a href="{{ site.get_url(tool) }}">{{ tool.name }}</a>
+            </td>
+            <td class="tools-table-categories"><ul>
+                {% for cat in tool.categories %}
+                <li><a href="{{ site.get_url(cat) }}">{{ cat.name }}</a></li>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </ul></td>
+            <td class="tools-table-developers"><ul>
+                {% for org in tool.organizations %}
+                <li><a href="{{ site.get_url(org) }}">{{ org.name }}</a></li>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </ul></td>
+            <td class="tools-table-proglangs"><ul>
+                {% for proglang in tool.languages %}
+                <li><a href="{{ site.get_url(proglang) }}">{{ proglang.name }}</a></li>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </ul></td>
+            <td class="tools-table-licenses"><ul>
+                {% for license in tool.licenses%}
+                <li><a href="{{ site.get_url(license) }}">{{ license.name }}</a></li>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </ul></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot><tr><th> </th></tr></tfoot>
+</table>
+
+{% endblock %}

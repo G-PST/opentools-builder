@@ -18,21 +18,6 @@ a {
     color: var(--gpst-blue);
 }
 
-#construction-banner {
-    flex-shrink: 0;
-    display: block;
-    color: white;
-    background-color: red;
-    max-width: 100%;
-    text-align: center;
-    padding: 1em;
-    margin: 0;
-}
-
-#construction-banner a {
-    color: white;
-}
-
 header {
     border-bottom: var(--gpst-blue) solid 10px;
 }
@@ -161,6 +146,7 @@ table.tools-table {
     border-radius: 10px;
     border-collapse: collapse;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 table.tools-table tbody tr:nth-child(odd) {
@@ -186,6 +172,13 @@ table.tools-table li {
 }
 
 /* Homepage */
+
+p.hero {
+    text-align: center;
+    color: #333333;
+    font-size: 1.2em;
+    margin: 2em;
+}
 
 .category-list {
     display: flex;
@@ -238,12 +231,14 @@ table.tools-table li {
 
 .category-tool-list, .subcategory-list, .subcategory-tool-list {
     display: flex;
-    gap: 0.5em;
+    flex-wrap: wrap;
+    gap: 0.8em 0.5em;
     padding: 1em;
 }
 
 .category-tool, .subcategory-tool {
     display: inline;
+    white-space: nowrap;
 }
 
 .tool-title {

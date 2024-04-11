@@ -1,5 +1,14 @@
 {% extends "nosidebar.html" %}
 {% block main %}
+<p class="hero">
+    The G-PST Open Tools Portal documents free and
+    open source software tools and datasets that can be used to plan and
+    operate decarbonized power systems.
+    It currently contains information on
+    <a href="{{ site.tools_url }}">{{ site.data.tools | count }} software tools</a>
+    from
+    <a href="{{ site.orgs_url }}">{{ site.data.organizations | count }} organizations</a>.
+</p>
 <ul class="category-list">
     {% for category_id, category in site.data.categories | dictsort %}
     {% if (category.tools or category.children) and not category.parent %}
@@ -50,4 +59,7 @@
     {% endif %}
     {% endfor %}
 </ul>
+<p class="hero">
+    See something missing? Help us improve by <a href="/contribute">submitting a tool</a>!
+</p>
 {% endblock %}
