@@ -4,6 +4,13 @@
 
 {% block main %}
 <h1>{{ tool.name }}</h1>
+
+<p id="tool-links">
+{% if tool.url_website %}<a href="{{tool.url_website}}">Website</a>{% endif %}
+{% if tool.url_docs %}<a href="{{tool.url_docs}}">Documentation</a>{% endif %}
+{% if tool.url_sourcecode %}<a href="{{tool.url_sourcecode}}">Source Code</a>{% endif %}
+</p>
+
 {% if tool.description %}
 <p>{{ tool.description }}</p>
 {% endif %}
